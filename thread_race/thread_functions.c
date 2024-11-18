@@ -2,6 +2,8 @@
 
 pthread_t thread[THREADS];
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+int ready_count = 0; 
 int winner[3] = {0, 0, 0};
 int count = 0;
 
@@ -23,6 +25,15 @@ void threadJoin(){
 void threadRace(void *arg){
     int thread_id = *((int*)arg);
     free(arg);
+
+    pthread_mutex_lock(&mutex);
+    ready_count++;
+    if (ready_count == THREADS) {
+        pthread_cond_broadcast(&cond);
+    } else {
+        pthread_cond_wait(&cond, &mutex);
+    }
+    pthread_mutex_unlock(&mutex);
 
     for(int i = 0; i < 10; i++){
         sleep(1);

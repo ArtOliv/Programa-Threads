@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 
-#define THREADS 50
+#define THREADS 100
 
 void createThreads();
 
