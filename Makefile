@@ -1,10 +1,10 @@
 PC = gcc
 EXECUTAVEL = tRace
 OBJ = main.o thread_functions.o
-CFLAGS = -Wall -pthread
+CFLAGS = -Wall -lpthread
 
 all: $(OBJ)
-	$(PC) $(OBJ) -o $(EXECUTAVEL)
+	$(PC) $(OBJ) -o $(EXECUTAVEL) $(CFLAGS)
 
 main.o: thread_race/main.c thread_race/thread.h
 	$(PC) $(CFLAGS) -c thread_race/main.c
